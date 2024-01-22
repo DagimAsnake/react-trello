@@ -29,6 +29,10 @@ const initalState = [
                 id: 2,
                 text: "fdjkf sdk fkdf sdksd fsdlsad fsdllskdf klsdfsdj"
             }, 
+            {
+                id: 3,
+                text: "fdjkf llskdf klsdfsdj"
+            }, 
         ]
     }
 ]
