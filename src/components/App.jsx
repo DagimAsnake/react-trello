@@ -30,7 +30,7 @@ function App({ lists, dispatch }) {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className='p-4'>
-        <div>Hello</div>
+        <div className='text-center text-4xl mb-9'>Trello</div>
         <Droppable droppableId='all-lists' direction='horizontal' type='list'>
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef} className='flex'>
