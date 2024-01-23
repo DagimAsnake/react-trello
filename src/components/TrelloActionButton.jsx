@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IoMdAdd, IoMdClose } from 'react-icons/io';
 import TextareaAutosize from 'react-textarea-autosize';
+import { connect } from 'react-redux';
+import { addList, addCard } from '../actions';
 
-const TrelloActionButton = ({ list }) => {
+const TrelloActionButton = ({ list, dispatch, listId }) => {
   const [formOpen, setFormOpen] = useState(false);
   const [text, setText] = useState('');
 
@@ -10,13 +12,28 @@ const TrelloActionButton = ({ list }) => {
     setFormOpen(true);
   };
 
-  const closeForm = (e) => {
+  const closeForm = () => {
     setFormOpen(false);
   };
 
   const handleInputChange = (e) => {
     setText(e.target.value);
   };
+
+  const handleAddList = () => {
+    if (text) {
+      dispatch(addList(text));
+      setText('')
+    }
+    return;
+  };
+
+  const handleAddCard = () => {
+    if(text) {
+      dispatch(addCard(listId, text))
+      setText('')
+    }
+  }
 
   const buttonText = list ? 'Add another list' : 'Add another card';
 
@@ -55,7 +72,12 @@ const TrelloActionButton = ({ list }) => {
           />
         </div>
         <div className='flex items-center'>
-          <button className='text-white bg-green-500 p-2 rounded-lg'>{buttonTitle}</button>
+          <button
+            onMouseDown={list ? handleAddList : handleAddCard}
+            className='text-white bg-green-500 p-2 rounded-lg'
+          >
+            {buttonTitle}
+          </button>
           <IoMdClose className='text-2xl cursor-pointer ml-2' />
         </div>
       </>
@@ -65,4 +87,4 @@ const TrelloActionButton = ({ list }) => {
   return formOpen ? addTitle() : addButton();
 };
 
-export default TrelloActionButton;
+export default connect()(TrelloActionButton);

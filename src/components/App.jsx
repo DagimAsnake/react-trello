@@ -11,7 +11,7 @@ function App({ lists }) {
       <div>Hello</div>
       <div className='flex'>
         {lists.map((list) => (
-          <TrelloList key={list.id} title={list.title} cards={list.cards} />
+          <TrelloList listId={list.id} key={list.id} title={list.title} cards={list.cards} />
         ))}
         <div className='bg-gray-400 rounded-md w-80 p-4 ml-4 h-fit'>
           <TrelloActionButton list />
