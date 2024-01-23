@@ -5,16 +5,16 @@ let cardId = 6;
 
 const initialState = [
   {
-    title: 'first try',
+    title: 'first',
     id: `list-${0}`,
     cards: [
       {
         id: `card-${0}`,
-        text: 'this is the first task',
+        text: 'This is the first task',
       },
       {
         id: `card-${1}`,
-        text: 'second tsht sjakfds aldks task',
+        text: 'First of second',
       },
     ],
   },
@@ -24,19 +24,19 @@ const initialState = [
     cards: [
       {
         id: `card-${2}`,
-        text: 'this isdkf sdk f ksdk sadk yess',
+        text: 'This second',
       },
       {
         id: `card-${3}`,
-        text: 'ssfjk skjf  ksd fskl aslfksd kjkf sksdfj sdkkdfj sdj jskdflks dfksdfj sdkf',
+        text: 'Move this on as u wish',
       },
       {
         id: `card-${4}`,
-        text: 'fdjkf sdk fkdf sdksd fsdlsad fsdllskdf klsdfsdj',
+        text: 'Try moving the whole list',
       },
       {
         id: `card-${5}`,
-        text: 'fdjkf llskdf klsdfsdj',
+        text: 'Moving only the cards inside the list',
       },
     ],
   },
@@ -81,16 +81,36 @@ const listReducer = (state = initialState, action) => {
             droppableIdEnd,
             droppableIndexStart,
             droppableIndexEnd,
-            draggableId
+            draggableId,
+            type
         } = action.payload
 
         const newState = [...state]
+
+        //drag lists around
+        if(type === "list"){
+          const list = newState.splice(droppableIndexStart, 1)
+          newState.splice(droppableIndexEnd, 0, ...list)
+          return newState
+        }
 
         //in the same list
         if(droppableIdStart === droppableIdEnd) {
             const list = state.find(list => droppableIdStart === list.id)
             const card = list.cards.splice(droppableIndexStart, 1)
             list.cards.splice(droppableIndexEnd, 0, ...card)
+        }
+
+        //in other list
+        if(droppableIdStart !== droppableIdEnd) {
+            //find list where the drag happened
+            const listStart = state.find(list => droppableIdStart === list.id)
+            //pullout the card from this list
+            const card = listStart.cards.splice(droppableIndexStart, 1)
+            //find list where the draf end
+            const listEnd = state.find(list => droppableIdEnd === list.id)
+            //put the card in the list
+            listEnd.cards.splice(droppableIndexEnd, 0, ...card)
         }
 
         return newState

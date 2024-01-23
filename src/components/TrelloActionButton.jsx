@@ -78,7 +78,7 @@ const TrelloActionButton = ({ list, dispatch, listId }) => {
           >
             {buttonTitle}
           </button>
-          <IoMdClose className='text-2xl cursor-pointer ml-2' />
+          <IoMdClose onClick={closeForm} className='text-2xl cursor-pointer ml-2' />
         </div>
       </>
     );
